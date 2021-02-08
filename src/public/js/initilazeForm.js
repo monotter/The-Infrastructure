@@ -35,14 +35,20 @@ function FormEvent(event) {
         body: (method.trim().toUpperCase() != "GET")?JSON.stringify(data):undefined
     })
     .then(async response => {
+        console.log(response)
         let data = await response.text()
         let element = form
         try {
             data = JSON.parse(data)
         }catch{}
-        try {
-            if(form.getAttribute("success")) eval(form.getAttribute("success"))
-        } catch (error) {
+        if(response.status>=200&&response.status<300){
+            try {
+                if(form.getAttribute("success")) eval(form.getAttribute("success"))
+            } catch (error) {
+                if(form.getAttribute("error")) eval(form.getAttribute("error"))
+            }
+        }
+        else{
             if(form.getAttribute("error")) eval(form.getAttribute("error"))
         }
     })
