@@ -12,6 +12,7 @@ app.set("view engine","ejs")
 app.set('views', path.join(__dirname, '/src/Views'));
 
 app.use(require("./src/Controllers/message"))
+app.use(require("./src/Controllers/user"))
 app.use(require("./src/Controllers/index"))
 app.use(express.static('src/public'))
 app.use(function(req, res){
