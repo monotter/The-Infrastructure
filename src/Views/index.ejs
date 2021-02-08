@@ -8,6 +8,8 @@
     <script src="js/initilazeForm.js"></script>
 </head>
 <body>
+    <h1>Message Api</h1>
+    <h2>Messages</h2>
     <form id="sendMessageForm" action="/api/message" method="post" success="logMessage(data)">
         <label>
             <span>Sender</span>
@@ -17,7 +19,7 @@
             <span>Content</span>
             <textarea name="content"></textarea>
         </label>
-        <input type="submit" value="Send">
+        <input type="submit" value="Add Message">
     </form>
     <div id="messages"></div>
     <script>
@@ -56,10 +58,7 @@
 
         fetch("/api/message")
         .then(async response => {
-            let data = await response.text()
-            try {
-                data = JSON.parse(data)
-            }catch{}
+            let data = await response.json()
             if(data.chunk)
             data.chunk.forEach(logMessage)
         })
