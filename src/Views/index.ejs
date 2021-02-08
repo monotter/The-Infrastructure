@@ -32,7 +32,7 @@
                     <div class="content">Content: <input name="content" value="${content}"></div>
                     <input type="submit" value="Save">
                 </form>
-                <form method="get" action="/api/message?_id=${_id}" success="data.chunk&&logMessage(data.chunk[0])">
+                <form method="get" action="/api/message" success="data.chunk&&logMessage(data.chunk[0])">
                     <input type="hidden" name="_id" value="${_id}">
                     <input type="submit" value="Cancel">
                 </form>

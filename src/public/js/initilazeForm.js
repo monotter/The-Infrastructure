@@ -1,3 +1,11 @@
+function objectToQueryString(obj) {
+    var str = [];
+    for (var p in obj)
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    return str.join("&");
+  }
 function serialize(data) {
 	let obj = {};
 	for (let [key, value] of data) {
@@ -16,12 +24,15 @@ function FormEvent(event) {
     event.preventDefault();
     const form = event.target
     let data = serialize(new FormData(form))
-    fetch(form.getAttribute("action")||"/",{
-        method: form.getAttribute("method")||"post",
+    let path = form.getAttribute("action") || "/"
+    let method = form.getAttribute("method") || "post"
+    if (method.trim().toUpperCase() == "GET") path+=`?${objectToQueryString(data)}`
+    fetch(path,{
+        method,
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: (method.trim().toUpperCase() != "GET")?JSON.stringify(data):undefined
     })
     .then(async response => {
         let data = await response.text()
