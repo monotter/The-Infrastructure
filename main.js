@@ -1,10 +1,10 @@
-const {port} = require("./src/Defines")
+require('dotenv').config();
 const cors = require("cors")
 const bodyparser = require("body-parser")
 const express = require("express")
 const path = require("path")
 const app = require("express")()
-
+const mongo = require("mongoose")
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cors());
@@ -31,9 +31,8 @@ app.use(function(req, res){
         res.status(500).send("Internal Server Error")
     }
 });
-
-app.listen(port.http,function() {
-    console.log(`App Served on ${port.http} port.`)
+app.listen(process.env.HTTP_Port,function() {
+    console.log(`App Served on ${process.env.HTTP_Port} port.`)
     function Route(Path, Method) {
         this.Path = Path
         this.Method = Method
@@ -54,3 +53,4 @@ app.listen(port.http,function() {
     console.log(`Table Of App Routes:`)
     console.table(Routes);
 })
+mongo.connect(process.env.DataBaseURL,{useNewUrlParser: true, useUnifiedTopology: true}, (err)=>{if(err) throw err; console.log("Api connected to database")})

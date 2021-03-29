@@ -1,9 +1,4 @@
-const mongo = require('mongoose')
-const mongoconnecturl = "mongodb://localhost:27017/db?retryWrites=true&w=majority"
-mongo.connect(mongoconnecturl,{useNewUrlParser: true, useUnifiedTopology: true}, (err)=>{if(err) throw err; console.log("Api connected to database")})
 module.exports = {
-    mongo,
-    port: {http:80},
     requestLog(req){
         let data = {}
         console.group("New request:");

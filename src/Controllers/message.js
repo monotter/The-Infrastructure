@@ -1,4 +1,4 @@
-const {requestLog} = require("../Defines")
+const {requestLog} = require("../Functions")
 const _ = require("lodash")
 const express = require('express')
 const model = require("../Models/message")
