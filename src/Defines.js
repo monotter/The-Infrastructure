@@ -4,9 +4,6 @@ mongo.connect(mongoconnecturl,{useNewUrlParser: true, useUnifiedTopology: true},
 module.exports = {
     mongo,
     port: {http:80},
-    CScheme(DBName,scheme){
-       return mongo.model(DBName, new mongo.Schema(scheme,{versionKey: false}))
-    },
     requestLog(req){
         let data = {}
         console.group("New request:");
