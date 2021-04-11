@@ -2,13 +2,14 @@ const {requestLog} = require("../Functions")
 const _ = require("lodash")
 const express = require('express')
 const model = require("../Models/message")
+const { io } = require("../Server")
 const router = express.Router()
-
 router.post("/api/message",async (req,res)=>{
     requestLog(req)
     let {content,sender} = req.body
     let message = await model.insert({content,sender})
-    res.status(200).send(message)
+    io.emit('newMessage', message)
+    res.sendStatus(200);
 })
 router.get("/api/message",async (req,res)=>{
     requestLog(req)
@@ -33,14 +34,16 @@ router.put("/api/message", async (req,res)=>{
     if(sender) prop["sender"] = sender
     await model.update({_id},{content,sender})
     let message = await model.select({_id},{multiple:false})
-    res.status(200).send(message)
+    io.emit('updateMessage', message)
+    res.sendStatus(200);
 })
 router.delete("/api/message",async (req,res)=>{
     requestLog(req)
     let {_id} = req.body
     let message = await model.select({_id},{multiple:false})
     await model.delete({_id},{multiple:false})
-    res.status(200).send(message)
+    io.emit('deleteMessage', message)
+    res.sendStatus(200);
 })
 
 router.get("/message/:_id",async (req,res)=>{

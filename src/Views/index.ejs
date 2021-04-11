@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Message API</title>
+    <script src="js/socket.io.min.js"></script>
     <script src="js/initilazeForm.js"></script>
 </head>
 <body>
     <h1>Message Api</h1>
     <h2>Messages</h2>
-    <form action="/api/message" method="post" success="logMessage(data)">
+    <form action="/api/message" method="post">
         <label>
             <span>Sender</span>
             <input name="sender" type="text">
@@ -23,12 +24,20 @@
     </form>
     <div id="messages"></div>
     <script>
+        window.socket = io();
+        socket.on("newMessage",logMessage)
+        socket.on("updateMessage",logMessage)
+        socket.on("deleteMessage",({_id})=>{
+            let element = document.querySelector(`#messages>[data-id="${_id}"]`)
+            if (!element) return;
+            element.remove()
+        })
         function EditMessage(mrow){
             let _id = mrow.getAttribute("data-id")
             let sender = mrow.querySelector(".sender>span").innerText
             let content = mrow.querySelector(".content>span").innerText
             mrow.innerHTML = /*html*/`
-                <form method="put" action="/api/message" success="logMessage(data)">
+                <form method="put" action="/api/message">
                     <input type="hidden" name="_id" value="${_id}">
                     <div class="sender">Sender: <input name="sender" value="${sender}"></div>
                     <div class="content">Content: <textarea name="content">${content}</textarea></div>
@@ -49,7 +58,7 @@
                 <div class="sender">Sender: <span>${sender}</span></div>
                 <div class="content">Content: <span>${content}</span></div>
                 <button class="updateButton" onclick="EditMessage(this.parentElement)">Update</button>
-                <form method="delete" action="/api/message" success="element.parentElement.remove()">
+                <form method="delete" action="/api/message">
                     <input type="hidden" name="_id" value="${_id}">
                     <input type="submit" value="Delete">
                 </form>

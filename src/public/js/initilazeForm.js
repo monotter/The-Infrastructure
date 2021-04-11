@@ -1,11 +1,11 @@
 function objectToQueryString(obj) {
     var str = [];
     for (var p in obj)
-      if (obj.hasOwnProperty(p)) {
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-      }
+        if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
     return str.join("&");
-  }
+}
 function serialize(data) {
 	let obj = {};
 	for (let [key, value] of data) {
@@ -26,6 +26,10 @@ function FormEvent(event) {
     let data = serialize(new FormData(form))
     let path = form.getAttribute("action") || "/"
     let method = form.getAttribute("method") || "post"
+    if(method.trim().toUpperCase() == "SOCKET" && typeof socket != 'undefined'){
+        socket.emit(path, data);
+        return;
+    }
     if (method.trim().toUpperCase() == "GET") path+=`?${objectToQueryString(data)}`
     fetch(path,{
         method,
