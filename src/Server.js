@@ -5,7 +5,7 @@ const server = http.createServer(app);
 const io = require('socket.io')(server);
 const mongo = require("mongoose")
 mongo.connect(process.env.DataBaseURL,{useNewUrlParser: true, useUnifiedTopology: true}, (err)=>{if(err) throw err; console.log("Api connected to database")})
-server.listen(process.env.HTTP_Port,function() {
+server.listen(process.env.PORT,function() {
     console.log(`App Served on ${process.env.HTTP_Port} port.`)
     function Route(Path, Method) {
         this.Path = Path
