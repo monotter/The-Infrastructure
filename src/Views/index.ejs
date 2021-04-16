@@ -4,73 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message API</title>
+    <title>The Infrastructure</title>
+    <link rel="icon" href="/assets/The-Infrastructure.png">
+    <link rel="stylesheet" href="/css/index.css">
     <script src="js/socket.io.min.js"></script>
     <script src="js/initilazeForm.js"></script>
+    <script src="js/index.js"></script>
 </head>
 <body>
-    <h1>Message Api</h1>
-    <h2>Messages</h2>
-    <form action="/api/message" method="post">
-        <label>
-            <span>Sender</span>
-            <input name="sender" type="text">
-        </label>
-        <label>
-            <span>Content</span>
-            <textarea name="content"></textarea>
-        </label>
-        <input type="submit" value="Add Message">
-    </form>
-    <div id="messages"></div>
+    <section class="header">
+        <div class="title-image">
+            <img src="/assets/The-Infrastructure-Full.png"/>
+        </div>
+        <h1 class="title">The Infrastructure</h1>
+        <span class="title-desc">A simple web application infrastructure made with Socket.io and ExpressJS, (including MongoDB connection.)</span>
+    </section>
+    <section class="container">
+        <form class="messageInput" action="/api/message" method="post">
+            <label>
+                <span>Sender</span>
+                <input name="sender" type="text">
+            </label>
+            <label>
+                <span>Content</span>
+                <textarea name="content"></textarea>
+            </label>
+            <input type="submit" value="Add Message">
+        </form>
+        <h2 class="title">Messages</h2>
+        <div id="messages"></div>
+    </section>
     <script>
-        window.socket = io();
-        socket.on("newMessage",logMessage)
-        socket.on("updateMessage",logMessage)
-        socket.on("deleteMessage",({_id})=>{
-            let element = document.querySelector(`#messages>[data-id="${_id}"]`)
-            if (!element) return;
-            element.remove()
-        })
-        function EditMessage(mrow){
-            let _id = mrow.getAttribute("data-id")
-            let sender = mrow.querySelector(".sender>span").innerText
-            let content = mrow.querySelector(".content>span").innerText
-            mrow.innerHTML = /*html*/`
-                <form method="put" action="/api/message">
-                    <input type="hidden" name="_id" value="${_id}">
-                    <div class="sender">Sender: <input name="sender" value="${sender}"></div>
-                    <div class="content">Content: <textarea name="content">${content}</textarea></div>
-                    <input type="submit" value="Save">
-                </form>
-                <form method="get" action="/api/message" success="data.chunk&&logMessage(data.chunk[0])">
-                    <input type="hidden" name="_id" value="${_id}">
-                    <input type="submit" value="Cancel">
-                </form>
-            `
-        }
-        function logMessage({_id,sender,content}){
-            let container = document.querySelector("#messages")
-            let mrow = container.querySelector(`[data-id='${_id}']`)||(document.createElement("div"));
-            !mrow.parentNode&&container.append(mrow);
-            mrow.setAttribute("data-id",_id)
-            mrow.innerHTML = /*html*/`
-                <div class="sender">Sender: <span>${sender}</span></div>
-                <div class="content">Content: <span>${content}</span></div>
-                <button class="updateButton" onclick="EditMessage(this.parentElement)">Update</button>
-                <form method="delete" action="/api/message">
-                    <input type="hidden" name="_id" value="${_id}">
-                    <input type="submit" value="Delete">
-                </form>
-            `
-        }
 
-        fetch("/api/message")
-        .then(async response => {
-            let data = await response.json()
-            if(data.chunk)
-            data.chunk.forEach(logMessage)
-        })
     </script>
 </body>
 </html>

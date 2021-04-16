@@ -1,0 +1,255 @@
+.header {
+    height: 100vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #c9c9c9;
+    align-items: center;
+}
+
+.title-image {
+    display: flex;
+    width: 300px;
+    height: 300px;
+    margin: 10px auto;
+    background-color: #4e4e4e;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 7px #0000004f;
+}
+
+html {
+    font-family: sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+.title-desc {
+    margin: 0 40px;
+    width: 400px;
+    display: inline-block;
+    color: #909090;
+}
+
+.title-image>img {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 300;
+    color: #4e4e4e;
+}
+
+.messageInput {
+    height: 300px;
+    margin: auto;
+    max-width: 600px;
+    width: 80vw;
+    background-color: #c9c9c9;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 0 7px #0000004f;
+    display: grid;
+    grid-template-rows: 60px auto 40px;
+}
+
+.messageInput>label {
+    padding: 5px 20px;
+    display: grid;
+}
+
+.messageInput>label:nth-child(2) {grid-auto-rows: 40px auto;box-sizing: border-box;}
+
+.messageInput>label:nth-child(1) {
+    grid-template-columns: 75px auto;
+    align-items: center;
+}
+
+.container {
+    padding: 30px;
+}
+
+.messageInput span {color: #909090;}
+
+.messageInput textarea {
+    height: calc(100% - 10px);
+    width: 100%;
+    border-radius: 10px;
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.messageInput input, .messageInput textarea {
+    background-color: #e5e5e5;
+    border-radius: 10px;
+    outline: none;
+    border: 2px solid #909090;
+    padding: 10px;
+    color: #4e4e4e;
+    font-size: 14px;
+}
+
+.messageInput input[type="submit"] {
+    border-radius: 0 0 10px 10px;
+    cursor: pointer;
+}
+
+.message {
+    text-align: left;
+    height: 300px;
+    max-width: 600px;
+    width: 80vw;
+    margin: 25px;
+    background-color: #c9c9c9;
+    display: inline-grid;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 0 7px #0000004f;
+    grid-template:
+        "a a" auto
+        "b b" auto
+        "c d" 40px;
+    position: relative;
+    color: #909090;
+}
+
+.message>.content {
+    grid-area: b;
+    grid-auto-rows: 40px auto;
+    box-sizing: border-box;
+    display: grid;
+    padding: 5px 20px;
+}
+
+.message>.updateButton {
+    grid-area: c;
+    border-radius: 0 0 0 10px;
+    border-right: 1px solid #909090!important;
+}
+
+.message>.sender {
+    grid-area: a;
+    grid-template-columns: 75px auto;
+    align-items: center;
+    display: grid;
+    padding: 5px 20px;
+}
+
+.message>.content>span.field {
+    height: 140px;
+    overflow-wrap: anywhere;
+    resize: none;
+    overflow-y: auto;
+}
+
+.message>*>span.field {
+    background-color: #e5e5e5;
+    border-radius: 10px;
+    outline: none;
+    border: 2px solid #909090;
+    padding: 10px;
+    color: #4e4e4e;
+    width: 100%;
+    overflow-x: auto;
+    height: 40px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.message>.updateButton,.message>.deleteform>input[type=submit] {
+    background-color: #e5e5e5;
+    outline: none;
+    border: 2px solid #909090;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    color: #4e4e4e;
+    font-size: 14px;
+}
+
+.message>.deleteform>input[type=submit] {
+    border-radius: 0 0 10px 0;
+    border-left: 1px solid #909090!important;
+}
+
+#messages {
+    text-align: center;
+}
+
+.message>form[method=put] {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: grid;
+    grid-template-rows: 60px auto 40px;
+}
+
+.message>form[method=put] > label.sender {
+    grid-template-columns: 75px auto;
+    align-items: center;
+}
+
+.message>form[method=put] > label.content {
+    grid-auto-rows: 40px auto;
+    box-sizing: border-box;
+}
+
+.message>form[method=put] > label {
+    padding: 5px 20px;
+    display: grid;
+}
+
+.message>form[method=put]>label>textarea, .message>form[method=put]>label>input {background-color: #e5e5e5;border-radius: 10px;outline: none;border: 2px solid #909090;padding: 10px;color: #4e4e4e;width: 100%;overflow-x: auto;box-sizing: border-box;font-size: 14px;}
+
+.message>form[method=put] textarea {
+    height: 140px;
+    overflow-wrap: anywhere;
+    resize: none;
+    overflow-y: auto;
+}
+
+.message>form[method=put]>input[type="submit"] {
+    width: 50%;
+    border-radius: 0 0 0 10px;
+    border-right: 1px solid #909090!important;
+}
+
+.message>form[method=get] {
+    width: 100%;
+    height: 0;
+    left: 50%;
+    bottom: 40px;
+    position: absolute;
+}
+
+.message>form[method=get]>input[type="submit"] {
+    border-radius: 0 0 10px 0;
+    border-left: 1px solid #909090!important;
+}
+
+.message.edit>form[method]>input[type="submit"] {
+    width: 50%;
+    background-color: #e5e5e5;
+    outline: none;
+    border: 2px solid #909090;
+    padding: 10px;
+    height: 40px;
+    cursor: pointer;
+    color: #4e4e4e;
+    font-size: 14px;
+}
+
+.message.edit {
+    display: inline-block;
+}
