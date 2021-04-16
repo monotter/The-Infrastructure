@@ -50,3 +50,14 @@ fetch("/api/message")
     if(data.chunk)
     data.chunk.forEach(logMessage)
 })
+function copycontent(element){
+    console.log(element)
+    var TempInput = document.createElement("input")
+    document.body.append(TempInput)
+    TempInput.value = element.innerText
+    TempInput.select()
+    TempInput.setSelectionRange(0, 99999)
+    document.execCommand("copy")
+    TempInput.remove()
+    alert("Copied the text: " + TempInput.value)
+}
