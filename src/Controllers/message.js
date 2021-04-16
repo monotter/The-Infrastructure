@@ -6,8 +6,10 @@ const { io } = require("../Server")
 const router = express.Router()
 router.post("/api/message",async (req,res)=>{
     requestLog(req)
+    if(await model.count() >= process.env.MessageLimit) return res.status(400).send(`You cant add more than ${process.env.MessageLimit}`)
     let {content,sender} = req.body
     let message = await model.insert({content,sender})
+    console.log()
     io.emit('newMessage', message)
     res.sendStatus(200);
 })
